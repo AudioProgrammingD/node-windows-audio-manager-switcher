@@ -119,12 +119,12 @@ Napi::Value ListDevices(const Napi::CallbackInfo &info)
     try
     {
         // Initialize COM for audio device operations
-        std::cout << "[C++] Initializing COM..." << std::endl;
+        // std::cout << "[C++] Initializing COM..." << std::endl;
         COMInitializer com;
-        std::cout << "[C++] COM initialized." << std::endl;
+        // std::cout << "[C++] COM initialized." << std::endl;
         // Retrieve system audio devices
         auto devices = AudioManager::listOutputDevices();
-        std::cout << "[C++] Devices found: " << devices.size() << std::endl;
+        // std::cout << "[C++] Devices found: " << devices.size() << std::endl;
         // Create JavaScript array for results
         Napi::Array result = Napi::Array::New(env, devices.size());
         // Convert each device to JavaScript object
@@ -134,7 +134,7 @@ Napi::Value ListDevices(const Napi::CallbackInfo &info)
             std::string name = WStringToUtf8(devices[i].name);
             std::string id = WStringToUtf8(devices[i].id);
 
-            std::cout << "[C++] Device " << i << ": " << name << std::endl;
+            // std::cout << "[C++] Device " << i << ": " << name << std::endl;
             // Create device object
             Napi::Object obj = Napi::Object::New(env);
             obj.Set("name", Napi::String::New(env, name));
