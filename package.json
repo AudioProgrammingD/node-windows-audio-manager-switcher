@@ -1,0 +1,32 @@
+{
+  "name": "node-windows-audio-manager-switcher",
+  "version": "0.0.2",
+  "main": "index.js",
+  "os": ["win32"],
+  "cpu": ["x64"],
+  "scripts": {
+    "install": "prebuild-install || node-gyp rebuild",
+    "prebuild": "prebuild --backend=node-gyp -t 20.13.1 --strip --napi",
+    "build": "node-gyp rebuild",
+    "dev:build": "npx node-gyp clean && npx node-gyp configure && npx node-gyp build",
+    "dev:prebuild": "npx prebuild --backend=node-gyp -t 20.13.1 --strip --napi",
+    "dev:test:devices": "node ./test/testListingDevices.js",
+    "dev:test:set-default": "node ./test/testSettingDefaultPlayBack.js"
+  },
+  "files": [
+    "prebuilds/",
+    "native/",
+    "index.js",
+    "binding.gyp"
+  ],
+  "keywords": ["audio", "windows", "native", "addon", "node-gyp", "c++"],
+  "author": "sameerbk201",
+  "license": "ISC",
+  "gypfile": true,
+  "description": "Native Node.js C++ addon for managing Windows audio devices",
+  "dependencies": {
+    "node-addon-api": "^8.3.1",
+    "node-gyp-build": "^4.8.4",
+    "prebuild": "^13.0.1"
+  }
+}

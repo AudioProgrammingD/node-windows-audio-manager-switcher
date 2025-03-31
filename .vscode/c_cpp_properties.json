@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "name": "windows-gcc-x64",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/node_modules/node-addon-api/",
+        "${workspaceFolder}/native/include",
+        "C:/Program Files/nodejs/",
+        "C:/Users/sameerk/AppData/Local/node-gyp/Cache/20.17.0/include/node"
+      ],
+      "compilerPath": "C:/msys64/ucrt64/bin/gcc.exe",
+      "cStandard": "${default}",
+      "cppStandard": "${default}",
+      "intelliSenseMode": "windows-gcc-x64",
+      "compilerArgs": [
+        ""
+      ]
+    }
+  ],
+  "version": 4
+}
