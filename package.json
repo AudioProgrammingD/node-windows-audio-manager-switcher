@@ -1,6 +1,6 @@
 {
   "name": "node-windows-audio-manager-switcher",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "index.js",
   "os": ["win32"],
   "cpu": ["x64"],
@@ -10,15 +10,14 @@
     "build": "node-gyp rebuild",
     "dev:build": "npx node-gyp clean && npx node-gyp configure && npx node-gyp build",
     "dev:prebuild": "npx prebuild --backend=node-gyp -t 20.13.1 --strip --napi",
-    "dev:test:devices": "node ./test/testListingDevices.js",
-    "dev:test:set-default": "node ./test/testSettingDefaultPlayBack.js"
+    "dev:test:list-devices": "node ./test/testListingDevices.js",
+    "dev:test:set-default": "node ./test/testSettingDefaultPlayBack.js",
+    "dev:test:mute-default": "node ./test/testMutingDefault.js",
+    "dev:test:mute-device": "node ./test/testMutingDevice.js",
+    "dev:test:unmute-default": "node ./test/testUnmutingDefault.js",
+    "dev:test:unmute-device": "node ./test/testUnmutingDevice.js"
   },
-  "files": [
-    "prebuilds/",
-    "native/",
-    "index.js",
-    "binding.gyp"
-  ],
+  "files": ["prebuilds/", "native/", "index.js", "binding.gyp"],
   "keywords": ["audio", "windows", "native", "addon", "node-gyp", "c++"],
   "author": "sameerbk201",
   "license": "ISC",
@@ -28,5 +27,13 @@
     "node-addon-api": "^8.3.1",
     "node-gyp-build": "^4.8.4",
     "prebuild": "^13.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AudioProgrammingD/node-windows-audio-manager-switcher"
+  },
+  "bugs": {
+    "url": "https://github.com/AudioProgrammingD/node-windows-audio-manager-switcher"
+  },
+  "homepage": "https://github.com/AudioProgrammingD/node-windows-audio-manager-switcher#readme"
 }

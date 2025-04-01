@@ -1,56 +1,45 @@
 # 🎧 Node Windows Audio Manager
 
-> 🔧 A lightweight Node.js native addon for managing **Windows audio playback devices**.  
-> Seamlessly integrated with Windows Core Audio APIs using **C++ + N-API**, prebuilt for plug-and-play usage.
+> Native Node.js addon for managing **Windows audio playback devices**  
+> Powered by **C++ + Node-API (N-API)** and ships with **prebuilt binaries** for easy plug-and-play.
 
 ---
 
 ## 🚀 Features
 
-- 🎚️ **List all active audio output devices**
-- 🔄 **Set a device as default playback** (System, Multimedia, Communication roles)
-- 🔇 **Mute/unmute** devices (coming soon)
-- 🧩 Native performance via C++ Core Audio integration
-- 💡 Prebuilt binaries for plug-and-play (no build tools needed!)
+- 🔍 List all active audio output devices (name, ID, isDefault)
+- 🎚️ Set any device as the system's default playback device
+- 🔇 Mute / unmute:
+  - ✅ Default output device
+  - ✅ Any specific device (by ID)
+- ⚙️ Built with Windows Core Audio + COM API
+- 💡 Prebuilt `.node` binaries — **no build tools required**
 
 ---
 
 ## 📦 Installation
 
 ```bash
-npm i node-windows-audio-manager
+npm install node-windows-audio-manager
 ```
 
-✅ Automatically installs native bindings (prebuilt binaries for Windows)
+✅ Works out of the box on Windows  
+✅ No Visual Studio or compilation needed
 
-> 💡 No need to compile manually unless you're modifying C++ sources.
+> 💬 If you modify native C++ code, see [Build From Source](#prebuilt-native-addon)
 
 ---
 
-## 📁 Folder Structure (Internals)
+## 🧠 Usage Examples
 
-```bash
-node-windows-audio-manager/
-├── index.js               # Entry point for users
-├── native/                # C++ code (addon.cpp + src)
-├── prebuilds/             # Prebuilt binaries (plug-and-play)
-├── build/                 # Created automatically after install (addon.node)
-├── test/                  # Example usage
-└── binding.gyp            # Node-gyp config
-```
-
----
-
-## 🧪 Example Usage
-
-### 🔍 List Devices
+### 🔍 List Playback Devices
 
 ```js
 const { listDevices } = require('node-windows-audio-manager');
 
 const devices = listDevices();
 devices.forEach((device, index) => {
-  console.log(`${index + 1}. ${device.name} [${device.id}]`);
+  console.log(`${index + 1}. ${device.name} [${device.id}] Default: ${device.isDefault}`);
 });
 ```
 
@@ -59,103 +48,126 @@ devices.forEach((device, index) => {
 ### 🎚️ Set Default Playback Device
 
 ```js
-const { setDefaultPlayback } = require('node-windows-audio-manager');
+const { listDevices, setDefaultPlayback } = require('node-windows-audio-manager');
 
 const devices = listDevices();
-const targetDevice = devices.find(d => d.name.includes('Speakers'));
+const target = devices.find(d => d.name.includes("Speakers"));
 
-if (targetDevice) {
-  const success = setDefaultPlayback(targetDevice.id);
-  console.log(success ? '✅ Switched default device.' : '❌ Failed to switch.');
-} else {
-  console.error('Device not found!');
+if (target) {
+  const success = setDefaultPlayback(target.id);
+  console.log(success ? "✅ Set as default!" : "❌ Failed to set device.");
 }
+```
+
+---
+
+### 🔇 Mute / Unmute Default Device
+
+```js
+const { setDefaultPlaybackMute } = require('node-windows-audio-manager');
+
+setDefaultPlaybackMute(true);  // Mute
+setDefaultPlaybackMute(false); // Unmute
+```
+
+---
+
+### 🔇 Mute / Unmute Specific Device by ID
+
+```js
+const { listDevices, muteDeviceById } = require('node-windows-audio-manager');
+
+const target = listDevices()[0]; // Example: first device
+muteDeviceById(target.id, true);  // Mute
+muteDeviceById(target.id, false); // Unmute
 ```
 
 ---
 
 ## 📘 API Reference
 
-### `listDevices(): Array<{ name: string, id: string }>`
-
-Returns a list of currently active audio playback devices.
-
----
-
-### `setDefaultPlayback(deviceId: string): boolean`
-
-Sets the specified device ID as the default system playback device for:
-
-- Console
-- Multimedia
-- Communications
-
-Returns:
-
-- `true` if successful
-- `false` on failure (invalid ID, permissions, etc.)
+| Function | Description |
+|----------|-------------|
+| `listDevices()` → `{ name, id, isDefault }[]` | Lists all active output devices |
+| `setDefaultPlayback(deviceId)` → `boolean` | Sets the default playback device |
+| `setDefaultPlaybackMute(mute)` → `boolean` | Mute/unmute the default device |
+| `muteDeviceById(deviceId, mute)` → `boolean` | Mute/unmute a specific device |
 
 ---
 
-## 💻 Prebuilt Native Addon
-
-No native build tools needed on install:
-
-- Binaries are automatically downloaded (via `prebuild-install`)
-- Targets Windows x64 / Node.js 20.x
-
-> 💡 If you’re building from source:
+## 📂 Project Structure
 
 ```bash
-npm run build       # Clean + configure + build native
-npm run prebuild    # Create prebuilt .tar.gz (for npm publish)
+node-windows-audio-manager/
+├── index.js               # JS bindings to native addon
+├── native/                # C++ source code (AudioSwitcher, DeviceUtils)
+├── prebuilds/             # Precompiled binaries (.tar.gz)
+├── build/                 # Generated at install (addon.node)
+├── test/                  # Interactive example scripts
+└── binding.gyp            # node-gyp config file
 ```
 
 ---
 
-## 🛠️ Scripts
+## 🧪 Dev Commands
 
-```json
-"scripts": {
-  "install": "prebuild-install || node-gyp rebuild",
-  "build": "node-gyp clean configure build",
-  "prebuild": "prebuild --backend=node-gyp -t 20.13.1 --strip --napi",
-  "test:devices": "node ./test/testListingDevices.js",
-  "test:setdefault": "node ./test/testSettingDefaultPlayback.js"
-}
+```bash
+# Build from source (dev)
+npm run dev:build
+
+# Generate prebuilt binary (for npm publish)
+npm run dev:prebuild
+
+# Run example tests
+npm run dev:test:devices
+npm run dev:test:set-default
+npm run dev:test:mute-default
+npm run dev:test:unmute-default
+npm run dev:test:mute-device
+npm run dev:test:unmute-device
 ```
 
 ---
 
-## 🐞 Troubleshooting
+## Prebuilt Native Addon
 
-- **❌ `node_api.h` not found**  
-  Ensure `node-addon-api` is installed, and use `"<!(node -p \"require('node-addon-api').include\")"` in your `binding.gyp`.
+No toolchain? No problem.
 
-- **❌ Prebuild doesn't work**  
-  Rebuild manually:
+We use [`prebuild`](https://github.com/prebuild/prebuild) to compile and package `.node` binaries:
 
-  ```bash
-  npm install --build-from-source
-  ```
+```bash
+npx prebuild --backend=node-gyp -t 20.13.1 --strip --napi
+```
 
-- **❌ Device switching fails silently**  
-  Run your app with **admin privileges** to ensure access to device policies.
+At install, `prebuild-install` downloads the correct binary from the `prebuilds/` folder.
+
+> 📦 Works seamlessly for Windows x64 and Node.js 20.x+
 
 ---
 
-## 🧑‍💻 Contributing
+## ⚠️ Troubleshooting
 
-Feel free to open issues or submit PRs. This project can be extended to support:
+| Problem                            | Solution                                                              |
+|-----------------------------------|-----------------------------------------------------------------------|
+| `node_api.h` not found            | Make sure `node-addon-api` is installed                              |
+| `addon.node` missing              | Run `npm rebuild` or `npm run dev:build`                             |
+| `CoCreateInstance` fails          | Run your script with **Administrator privileges**                    |
+| `prebuild` fails                  | Ensure Node.js version matches and all build tools are set up        |
 
-- 🔇 Mute/unmute devices
-- 📈 Get/set volume levels
-- 🔁 Monitor device changes (hotplug events)
+---
+
+## 🙌 Contributing
+
+We welcome PRs and ideas! You can contribute by:
+
+- 🎚️ Adding volume control APIs
+- 🔁 Listening to real-time device change events
+- ✅ Writing unit tests (e.g. with `jest` or `mocha`)
 
 ---
 
 ## ❤️ Credits
 
-- Built with [Node-API (N-API)](https://nodejs.org/api/n-api.html)
-- Windows COM APIs (Core Audio)
-- Based on [`IPolicyConfig`](https://github.com/tartakynov/audioswitch/blob/master/IPolicyConfig.h) for default switching (undocumented)
+- Microsoft Core Audio APIs (`IMMDevice`, `IPolicyConfig`, `IAudioEndpointVolume`)
+- [node-addon-api](https://github.com/nodejs/node-addon-api) (N-API C++ bindings)
+- Inspiration: [tartakynov/audioswitch](https://github.com/tartakynov/audioswitch)

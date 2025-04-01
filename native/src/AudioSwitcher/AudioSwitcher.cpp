@@ -53,7 +53,7 @@ namespace AudioSwitcher
             {
                 IMMDevice *pDevice = nullptr;
                 LPWSTR deviceId = nullptr;
-
+                
                 // Get the i-th device
                 hr = pDevices->Item(i, &pDevice);
                 if (FAILED(hr))
