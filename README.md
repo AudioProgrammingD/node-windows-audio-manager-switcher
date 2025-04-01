@@ -48,13 +48,13 @@ devices.forEach((device, index) => {
 ### 🎚️ Set Default Playback Device
 
 ```js
-const { listDevices, setDefaultPlayback } = require('node-windows-audio-manager');
+const { listDevices, setDefaultDevice } = require('node-windows-audio-manager');
 
 const devices = listDevices();
 const target = devices.find(d => d.name.includes("Speakers"));
 
 if (target) {
-  const success = setDefaultPlayback(target.id);
+  const success = setDefaultDevice(target.id);
   console.log(success ? "✅ Set as default!" : "❌ Failed to set device.");
 }
 ```
@@ -89,7 +89,7 @@ muteDeviceById(target.id, false); // Unmute
 | Function | Description |
 |----------|-------------|
 | `listDevices()` → `{ name, id, isDefault }[]` | Lists all active output devices |
-| `setDefaultPlayback(deviceId)` → `boolean` | Sets the default playback device |
+| `setDefaultDevice(deviceId)` → `boolean` | Sets the default playback device |
 | `setDefaultPlaybackMute(mute)` → `boolean` | Mute/unmute the default device |
 | `muteDeviceById(deviceId, mute)` → `boolean` | Mute/unmute a specific device |
 
