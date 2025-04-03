@@ -9,8 +9,8 @@
  *              - Mute control for both default and specific devices
  * 
  * @license MIT
- * @author [Your Name]
- * @copyright [Year] [Your Name/Organization]
+ * @author [sameerbk201]
+ * @copyright [2025] [sameerbk201]
  */
 const addon = require('./build/Release/addon.node');
 /**

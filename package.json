@@ -1,6 +1,6 @@
 {
   "name": "node-windows-audio-manager-switcher",
-  "version": "0.0.6",
+  "version": "0.0.61",
   "main": "index.js",
   "os": ["win32"],
   "cpu": ["x64"],
