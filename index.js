@@ -8,7 +8,6 @@
  *              - Default device configuration
  *              - Mute control for both default and specific devices
  * 
- * @license MIT
  * @author [sameerbk201]
  * @copyright [2025] [sameerbk201]
  */
