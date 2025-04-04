@@ -231,6 +231,44 @@ Use one of these versions if you want to manually set it.
 
 ---
 
+### 📌 Note on Prebuilt Binaries
+
+This package ships with **prebuilt native binaries** for seamless installation — no C++ compiler, Visual Studio, or Windows SDK required!
+
+✅ Just run:
+
+```bash
+npm install node-windows-audio-manager-switcher
+```
+
+> Under the hood, we use [`prebuild`](https://github.com/prebuild/prebuild) + [`prebuild-install`](https://github.com/prebuild/prebuild-install) to provide platform-specific `.node` binaries.
+
+#### ℹ️ How It Works
+
+- During `npm install`, `prebuild-install` checks for a compatible `.tar.gz` binary (based on your Node.js version and OS).
+- If a matching binary is found (e.g. Node.js 20.x, Windows x64), it downloads and installs automatically.
+- If **no matching binary** is available, it falls back to building from source — which requires **Visual Studio + Windows SDK**.
+
+#### 💡 Supported Node Versions
+
+We currently provide prebuilds for:
+
+- ✅ Node.js 20.x (`v115`)
+- _(More coming soon...)_
+
+If you're using a newer Node.js version and see an install error like:
+
+```bash
+prebuild-install warn install No prebuilt binaries found (target=22.14.0 ...)
+```
+
+This means we haven't published a prebuilt binary for your Node version **yet**. You can either:
+
+- ⚙️ Build from source (requires build tools), or
+- 🧩 Downgrade to a supported Node.js version (e.g. Node 20.x)
+
+---
+
 ## 🙌 Contributing
 
 We welcome PRs and ideas! You can contribute by:
