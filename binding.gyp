@@ -26,8 +26,10 @@
                             "VCCLCompilerTool": {
                                 "ExceptionHandling": 1,
                                 "RuntimeLibrary": 2,
-                            }
-                        }
+                            },
+                            "PlatformToolset": "v143",
+                        },
+                        # "msvs_windows_target_platform_version": "10.0.26100.0"
                     },
                 ]
             ],

@@ -147,12 +147,87 @@ At install, `prebuild-install` downloads the correct binary from the `prebuilds/
 
 ## ⚠️ Troubleshooting
 
-| Problem                            | Solution                                                              |
-|-----------------------------------|-----------------------------------------------------------------------|
-| `node_api.h` not found            | Make sure `node-addon-api` is installed                              |
-| `addon.node` missing              | Run `npm rebuild` or `npm run dev:build`                             |
-| `CoCreateInstance` fails          | Run your script with **Administrator privileges**                    |
-| `prebuild` fails                  | Ensure Node.js version matches and all build tools are set up        |
+| Problem                                       | Solution                                                                                   |
+|----------------------------------------------|--------------------------------------------------------------------------------------------|
+| `node_api.h` not found                       | Make sure `node-addon-api` is installed: `npm install node-addon-api`                     |
+| `addon.node` missing                         | Run `npm rebuild` or `npm run dev:build`                                                  |
+| `CoCreateInstance` fails                     | Run your script with **Administrator privileges** (Right click > "Run as Administrator")  |
+| `prebuild` fails                             | Ensure Node.js version matches and all required build tools are installed                 |
+| ❌ `WindowsTargetPlatformVersion` error       | See **"Missing Windows SDK version" fix below**                                           |
+
+---
+
+### 🛠️ Missing Windows SDK Version
+
+You might see an error like:
+
+```bash
+The Windows SDK version 10.0.22621.0 was not found. 
+Install the required version of Windows SDK or change the SDK version...
+```
+
+This happens when your system **doesn't have the specific Windows SDK version** your build setup is looking for.
+
+#### ✅ Solution 1: Let it use the latest installed SDK (Recommended)
+
+Update your `binding.gyp` file and **remove the hardcoded SDK version**:
+
+**Before (❌):**
+
+```json
+"msvs_windows_target_platform_version": "10.0.22621.0"
+```
+
+**After (✅):**
+Just delete that line entirely.
+
+Then rebuild everything:
+
+```bash
+npx node-gyp clean
+npx node-gyp configure
+npx node-gyp build
+```
+
+Node-gyp will now use **the latest installed SDK version** automatically.
+
+---
+
+#### ✅ Solution 2: Download the required SDK version
+
+If you **want to use a specific SDK version** mentioned in the error (like `10.0.22621.0`), do this:
+
+1. Visit the official Windows SDK archive:  
+   👉 [https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/)
+
+2. Download and install the **exact SDK version** shown in the error.
+
+3. Once installed, re-run:
+
+   ```bash
+   npm install
+   ```
+
+---
+
+### 🔍 How to check installed SDKs
+
+Run this in PowerShell:
+
+```powershell
+Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\Include' | Select-Object Name
+```
+
+You’ll see something like:
+
+```bash
+Name
+----
+10.0.19041.0
+10.0.26100.0
+```
+
+Use one of these versions if you want to manually set it.
 
 ---
 
