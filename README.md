@@ -249,12 +249,35 @@ npm install node-windows-audio-manager-switcher
 - If a matching binary is found (e.g. Node.js 20.x, Windows x64), it downloads and installs automatically.
 - If **no matching binary** is available, it falls back to building from source — which requires **Visual Studio + Windows SDK**.
 
+Here’s the updated section with a clean **batch-style** note and a list of supported versions so far:
+
+---
+
 #### 💡 Supported Node Versions
 
-We currently provide prebuilds for:
+We currently provide prebuilt native binaries for the following Node.js versions:
 
-- ✅ Node.js 20.x (`v115`)
+| Node.js Version | ABI Version | Status     |
+|-----------------|-------------|------------|
+| ✅ 22.x          | `v127`      | Supported  |
+| ✅ 21.x          | `v130`      | Supported  |
+| ✅ 20.x          | `v115`      | Supported  |
+| ✅ 19.x          | `v111`      | Supported  |
+| ✅ 18.x (LTS)    | `v108`      | Supported  |
+
+> 💡 **Note:** If you're using a different version of Node.js and encounter the message  
+> `prebuild-install warn install No prebuilt binaries found`, you can either:
+>
+> 1. **Switch to a supported version** (recommended), or  
+> 2. **Manually build from source** by running:
+
+```bash
+npm install --build-from-source
+```
+
 - _(More coming soon...)_
+
+---
 
 If you're using a newer Node.js version and see an install error like:
 
