@@ -20,7 +20,7 @@
 ## 📦 Installation
 
 ```bash
-npm install node-windows-audio-manager
+npm install node-windows-audio-manager-switcher
 ```
 
 ✅ Works out of the box on Windows  
@@ -35,7 +35,7 @@ npm install node-windows-audio-manager
 ### 🔍 List Playback Devices
 
 ```js
-const { listDevices } = require('node-windows-audio-manager');
+const { listDevices } = require('node-windows-audio-manager-switcher');
 
 const devices = listDevices();
 devices.forEach((device, index) => {
@@ -48,7 +48,7 @@ devices.forEach((device, index) => {
 ### 🎚️ Set Default Playback Device
 
 ```js
-const { listDevices, setDefaultDevice } = require('node-windows-audio-manager');
+const { listDevices, setDefaultDevice } = require('node-windows-audio-manager-switcher');
 
 const devices = listDevices();
 const target = devices.find(d => d.name.includes("Speakers"));
@@ -64,7 +64,7 @@ if (target) {
 ### 🔇 Mute / Unmute Default Device
 
 ```js
-const { setDefaultPlaybackMute } = require('node-windows-audio-manager');
+const { setDefaultPlaybackMute } = require('node-windows-audio-manager-switcher');
 
 setDefaultPlaybackMute(true);  // Mute
 setDefaultPlaybackMute(false); // Unmute
@@ -75,7 +75,7 @@ setDefaultPlaybackMute(false); // Unmute
 ### 🔇 Mute / Unmute Specific Device by ID
 
 ```js
-const { listDevices, muteDeviceById } = require('node-windows-audio-manager');
+const { listDevices, muteDeviceById } = require('node-windows-audio-manager-switcher');
 
 const target = listDevices()[0]; // Example: first device
 muteDeviceById(target.id, true);  // Mute
@@ -98,7 +98,7 @@ muteDeviceById(target.id, false); // Unmute
 ## 📂 Project Structure
 
 ```bash
-node-windows-audio-manager/
+node-windows-audio-manager-switcher/
 ├── index.js               # JS bindings to native addon
 ├── native/                # C++ source code (AudioSwitcher, DeviceUtils)
 ├── prebuilds/             # Precompiled binaries (.tar.gz)
@@ -238,7 +238,7 @@ This package ships with **prebuilt native binaries** for seamless installation �
 ✅ Just run:
 
 ```bash
-npm install node-windows-audio-manager-switcher
+npm install node-windows-audio-manager-switcher-switcher
 ```
 
 > Under the hood, we use [`prebuild`](https://github.com/prebuild/prebuild) + [`prebuild-install`](https://github.com/prebuild/prebuild-install) to provide platform-specific `.node` binaries.

@@ -1,6 +1,6 @@
 {
   "name": "node-windows-audio-manager-switcher",
-  "version": "0.0.64",
+  "version": "1.0.0",
   "main": "index.js",
   "binary": {
     "module_name": "addon",
@@ -17,10 +17,10 @@
   ],
   "scripts": {
     "install": "prebuild-install || node-gyp rebuild",
-    "prebuild": "prebuild --backend=node-gyp -t 20.13.1 --strip --napi",
+    "prebuild": "prebuild --backend=node-gyp -t 22.0.0 -t 21.0.0 -t 20.13.1 -t 19.0.0 -t 18.0.0 -t 17.0.0 --strip --napi",
     "build": "node-gyp rebuild",
     "dev:build": "npx node-gyp clean && npx node-gyp configure && npx node-gyp build",
-    "dev:prebuild": "npx prebuild --backend=node-gyp -t 20.13.1 --strip --napi",
+    "dev:prebuild": "npx prebuild --backend=node-gyp -t 22.0.0 -t 21.0.0 -t 20.13.1 -t 19.0.0 -t 18.0.0 -t 17.0.0 --strip --napi",
     "dev:test:list-devices": "node ./test/testListingDevices.js",
     "dev:test:set-default": "node ./test/testSettingDefaultPlayBack.js",
     "dev:test:mute-default": "node ./test/testMutingDefault.js",
