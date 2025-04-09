@@ -1,6 +1,6 @@
 /**
  * @file index.js
- * @module node-windows-audio-manager
+ * @module node-windows-audio-manager-switcher
  * @description Primary interface for the Windows Audio Manager native addon.
  *              Provides JavaScript bindings to native C++ audio device management functions
  *              through Node.js N-API. This module enables:
@@ -21,7 +21,7 @@ const addon = require('./build/Release/addon.node');
  * @property {boolean} isDefault - True if device is current default playback device
  * 
  * @example
- * const { listDevices } = require('node-windows-audio-manager');
+ * const { listDevices } = require('node-windows-audio-manager-switcher');
  * const devices = listDevices();
  * console.log('Available playback devices:');
  * devices.forEach(device => {
@@ -37,7 +37,7 @@ const addon = require('./build/Release/addon.node');
  * @returns {boolean} True if operation succeeded, false otherwise
  * 
  * @example
- * const { listDevices, setDefaultDevice } = require('node-windows-audio-manager');
+ * const { listDevices, setDefaultDevice } = require('node-windows-audio-manager-switcher');
  * const [firstDevice] = listDevices();
  * if (firstDevice) {
  *   const success = setDefaultDevice(firstDevice.id);
@@ -52,7 +52,7 @@ const addon = require('./build/Release/addon.node');
  * @returns {boolean} True if operation succeeded, false otherwise
  * 
  * @example
- * const { setDefaultPlaybackMute } = require('node-windows-audio-manager');
+ * const { setDefaultPlaybackMute } = require('node-windows-audio-manager-switcher');
  * // Mute the default device
  * setDefaultPlaybackMute(true);
  * 
@@ -68,7 +68,7 @@ const addon = require('./build/Release/addon.node');
  * @returns {boolean} True if operation succeeded, false otherwise
  * 
  * @example
- * const { listDevices, muteDeviceById } = require('node-windows-audio-manager');
+ * const { listDevices, muteDeviceById } = require('node-windows-audio-manager-switcher');
  * const [speakers, headphones] = listDevices();
  * // Mute speakers if available
  * if (speakers) {
